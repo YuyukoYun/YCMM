@@ -58,7 +58,7 @@ public class CaesarCipher {
 
         String ciphertext = "";
         int ror = (int)Math.ceil(text.length()/length);
-        char[][] textrf = new char[ror + 1][length];
+        char[][] textrf = new char[ror + ][length];
 
         for (int i = 0; i < text.length() ; i++) {
             //int x = 0;

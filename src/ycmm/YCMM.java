@@ -5,14 +5,9 @@
  */
 package ycmm;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.PrintStream;
-import java.util.Scanner;
 import javax.swing.JOptionPane;
 /**
  *
@@ -40,16 +35,16 @@ public class YCMM {
             while ((i = f.read()) != -1) {
                 text = text + (char) i;
             }
-            System.out.println(text);
+            //System.out.println(text);
             text=text.replace(" ","");
             text=text.replaceAll("[\\pP\\p{Punct}]","");
             text=text.toLowerCase();
-            System.out.println(text);
+            //System.out.println(text);
             PrintStream ps = new PrintStream(new FileOutputStream("file.txt"));
-            System.out.println(CC.encryption(text, 3));
-            System.out.println(CC.encryptionrf(text, 3));
-            System.out.println(CC.encryptionsi(text, "mylove"));
-            System.out.println(MT.encryption(text, "RADIO"));
+            //System.out.println(CC.encryption(text, 3));
+            //System.out.println(CC.encryptionrf(text, 3));
+            //System.out.println(CC.encryptionsi(text, "mylove"));
+            //System.out.println(MT.encryption(text, "RADIO"));
 
             
         JOptionPane.showMessageDialog(null, "Be quiet! Don't let anyone see you!");
@@ -71,30 +66,30 @@ public class YCMM {
         if(info.equals("Caesar cipher")){
         
             int Cc = Integer.parseInt(JOptionPane.showInputDialog(null,"How many Spaces does the alphabet move to the right","IP",JOptionPane.WARNING_MESSAGE));		//输入对话框
-            System.out.println(info);
-            System.out.println(CC.encryption(text, Cc));
+            //System.out.println(info);
+            //System.out.println(CC.encryption(text, Cc));
             ps.println(CC.encryption(text, Cc));
             
         }
         if(info.equals("Rail fence cipher")){
         
             int Rf = Integer.parseInt(JOptionPane.showInputDialog(null,"How many letters per group","IP",JOptionPane.WARNING_MESSAGE));		//输入对话框
-            System.out.println(info);
-            System.out.println(CC.encryptionrf(text, Rf));
+            //System.out.println(info);
+            //System.out.println(CC.encryptionrf(text, Rf));
             ps.println(CC.encryptionrf(text, Rf));
         }
         if(info.equals("Monoalphabetic Cipher")){
         
-            String Mc = JOptionPane.showInputDialog(null,"What is the keyword","IP",JOptionPane.WARNING_MESSAGE);		//输入对话框
-            System.out.println(info);
-            System.out.println(CC.encryptionsi(text, Mc));
+            String Mc = JOptionPane.showInputDialog(null,"What is the keyword，Please make sure there are no duplicate letters","IP",JOptionPane.WARNING_MESSAGE);		//输入对话框
+            //System.out.println(info);
+            //System.out.println(CC.encryptionsi(text, Mc));
             ps.println(CC.encryptionsi(text, Mc));
         }
         if(info.equals("Vigenère cipher")){
         
             String Vc = JOptionPane.showInputDialog(null,"What is the keyword","IP",JOptionPane.WARNING_MESSAGE);		//输入对话框
-            System.out.println(info);
-            System.out.println(MT.encryption(text, Vc));
+            //System.out.println(info);
+            //System.out.println(MT.encryption(text, Vc));
             ps.println(MT.encryption(text, Vc));
         }
             
@@ -102,16 +97,5 @@ public class YCMM {
             f.close();
         }
  
-        
-        //String text = (String)objStream.readObject();
-        
 
-        
-        
-        
-        
-
-
-        
     }
-//}
