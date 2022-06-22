@@ -5,10 +5,13 @@
  */
 package ycmm;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintStream;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
 /**
@@ -24,31 +27,25 @@ public class YCMM {
 
     
     
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         // 显示应用 GUI
         CaesarCipher CC = new CaesarCipher();
-        Scanner scanner = new Scanner(System.in);
         MultipleTableMima MT = new MultipleTableMima();
-        
-        try {
 
-            FileOutputStream file = new FileOutputStream("file.txt");
-
-            //创建一个ObjectOutputStream
-            ObjectOutputStream output = new ObjectOutputStream(file);
+            JOptionPane.showMessageDialog(null, "Write your text in file.txt");
             
-            //将对象写入输出流
-            
-            String secret = JOptionPane.showInputDialog(null,"Tell your secret","IP",JOptionPane.WARNING_MESSAGE);		//输入对话框
-            System.out.println(secret);
-            output.writeObject(secret);
-
-            //使用ObjectInputStream读取数据
-            FileInputStream fileStream = new FileInputStream("file.txt");
-            ObjectInputStream objStream = new ObjectInputStream(fileStream);
-            
-            String text = (String)objStream.readObject();
+            FileInputStream f = new FileInputStream("file.txt");
+            int i; 
+            String text = "";
+            while ((i = f.read()) != -1) {
+                text = text + (char) i;
+            }
             System.out.println(text);
+            text=text.replace(" ","");
+            text=text.replaceAll("[\\pP\\p{Punct}]","");
+            text=text.toLowerCase();
+            System.out.println(text);
+            PrintStream ps = new PrintStream(new FileOutputStream("file.txt"));
             System.out.println(CC.encryption(text, 3));
             System.out.println(CC.encryptionrf(text, 3));
             System.out.println(CC.encryptionsi(text, "mylove"));
@@ -66,7 +63,7 @@ public class YCMM {
         }
        
         
-        
+
         String [] options = {"Caesar cipher","Rail fence cipher","Monoalphabetic Cipher","Vigenère cipher"};
         String info =  (String)JOptionPane.showInputDialog(null,"Choose the encryption method you want (even though none of them are secure enough):","warning",JOptionPane.QUESTION_MESSAGE,null,options,options[2]);
         System.out.println(info);
@@ -76,7 +73,7 @@ public class YCMM {
             int Cc = Integer.parseInt(JOptionPane.showInputDialog(null,"How many Spaces does the alphabet move to the right","IP",JOptionPane.WARNING_MESSAGE));		//输入对话框
             System.out.println(info);
             System.out.println(CC.encryption(text, Cc));
-            output.writeObject(CC.encryption(text, Cc));
+            ps.println(CC.encryption(text, Cc));
             
         }
         if(info.equals("Rail fence cipher")){
@@ -84,30 +81,27 @@ public class YCMM {
             int Rf = Integer.parseInt(JOptionPane.showInputDialog(null,"How many letters per group","IP",JOptionPane.WARNING_MESSAGE));		//输入对话框
             System.out.println(info);
             System.out.println(CC.encryptionrf(text, Rf));
-            output.writeObject(CC.encryptionrf(text, Rf));
+            ps.println(CC.encryptionrf(text, Rf));
         }
         if(info.equals("Monoalphabetic Cipher")){
         
             String Mc = JOptionPane.showInputDialog(null,"What is the keyword","IP",JOptionPane.WARNING_MESSAGE);		//输入对话框
             System.out.println(info);
             System.out.println(CC.encryptionsi(text, Mc));
-            output.writeObject(CC.encryptionsi(text, Mc));
+            ps.println(CC.encryptionsi(text, Mc));
         }
         if(info.equals("Vigenère cipher")){
         
             String Vc = JOptionPane.showInputDialog(null,"What is the keyword","IP",JOptionPane.WARNING_MESSAGE);		//输入对话框
             System.out.println(info);
             System.out.println(MT.encryption(text, Vc));
-            output.writeObject(MT.encryption(text, Vc));
+            ps.println(MT.encryption(text, Vc));
         }
             
-            output.close();
-            objStream.close();
+            ps.close();
+            f.close();
         }
-
-        catch (Exception e) {
-            e.getStackTrace();
-        }
+ 
         
         //String text = (String)objStream.readObject();
         
@@ -120,4 +114,4 @@ public class YCMM {
 
         
     }
-}
+//}
